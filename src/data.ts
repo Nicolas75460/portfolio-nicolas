@@ -1,77 +1,81 @@
+export type Language = 'en' | 'pt-BR';
+export type Localized = { en: string; 'pt-BR': string };
+export const l = (en: string, pt: string): Localized => ({ en, 'pt-BR': pt });
 export type Orbit = 'ai' | 'data' | 'code';
-export type Filter = 'all' | 'ai' | 'software' | 'data';
-export type ProjectId = 'jarvis' | 'exchange' | 'hive' | 'todo';
+export type Filter = 'all' | 'ai' | 'software' | 'automation';
+export type ProjectId = 'multiagent' | 'exchange' | 'market' | 'jarvis' | 'documents';
 export type Module = 'context' | 'memory' | 'orchestrator' | 'models' | 'tools' | 'output';
 export type Scenario = 'overview' | 'payments' | 'contracts';
-export interface TraceLine { text: string; kind?: 'muted' | 'success' }
-export const orbitCaptions: Record<Orbit,string> = {
-  ai: 'Specialized agents. One coordinated system.',
-  data: 'Connecting information to useful insights.',
-  code: 'From a clear contract to a working application.'
+export interface TraceLine { text: Localized; kind?: 'muted' | 'success' }
+export const orbitCaptions: Record<Orbit, Localized> = {
+  ai: l('Specialized agents. One coordinated system.', 'Agentes especializados. Um sistema coordenado.'),
+  data: l('Connecting information to useful insights.', 'Conectando informações a descobertas úteis.'),
+  code: l('From a clear contract to a working application.', 'De um contrato bem definido a uma aplicação funcional.')
 };
-export const moduleDetails: Record<Module,{label:string;title:string;description:string}> = {
-  context: {label:'THE REQUEST LAYER',title:'Give the system a clear starting point.',description:'Instructions, the current question and relevant conversation history establish what the agents should do and how they should respond.'},
-  memory: {label:'THE INFORMATION LAYER',title:'Keep relevant information within reach.',description:'An agent architecture can retrieve relevant information from a session or a knowledge store, rather than sending every piece of information to the model.'},
-  orchestrator: {label:'THE COORDINATION LAYER',title:'One system. Specialized responsibilities.',description:'The orchestrator interprets a request, delegates to the right specialists, and combines their findings into one response.'},
-  models: {label:'THE LANGUAGE LAYER',title:'Interpret the question. Choose the next step.',description:'A language model helps interpret requests and select appropriate tools. Clear instructions and tool descriptions guide that decision.'},
-  tools: {label:'THE ACTION LAYER',title:'Connect reasoning to actual operations.',description:'Tools give agents defined ways to retrieve records, query data or calculate indicators. Their inputs and outputs form an explicit contract.'},
-  output: {label:'THE RESPONSE LAYER',title:'Make the result useful to another system.',description:'Specialist findings can be consolidated into a structured response such as JSON, with supporting explanations and explicit limitations.'}
+export const moduleDetails: Record<Module, {label: Localized; title: Localized; description: Localized; name: Localized; short: Localized}> = {
+  context: {name:l('Context','Contexto'),short:l('Instructions & history','Instruções e histórico'),label:l('THE REQUEST LAYER','A CAMADA DE ENTRADA'),title:l('Give the system a clear starting point.','Dê ao sistema um ponto de partida claro.'),description:l('Instructions, the current question and relevant history establish what the agents should do and how they should respond.','As instruções, a pergunta atual e o histórico relevante definem o que os agentes devem fazer e como devem responder.')},
+  memory: {name:l('Memory','Memória'),short:l('Relevant information','Informações relevantes'),label:l('THE INFORMATION LAYER','A CAMADA DE INFORMAÇÃO'),title:l('Keep relevant information within reach.','Mantenha as informações relevantes por perto.'),description:l('An agent architecture can retrieve relevant information from a session or a knowledge store, rather than sending everything to the model.','Uma arquitetura de agentes pode recuperar informações relevantes de uma sessão ou base de conhecimento, sem enviar todo o conteúdo ao modelo.')},
+  orchestrator: {name:l('Orchestrator','Orquestrador'),short:l('Plan → Delegate → Synthesize','Planejar → Delegar → Consolidar'),label:l('THE COORDINATION LAYER','A CAMADA DE COORDENAÇÃO'),title:l('One system. Specialized responsibilities.','Um sistema. Responsabilidades especializadas.'),description:l('The orchestrator interprets a request, delegates to the right specialists, and combines their findings into one response.','O orquestrador interpreta a solicitação, delega aos especialistas adequados e reúne os resultados em uma resposta.')},
+  models: {name:l('Model','Modelo'),short:l('Language understanding','Compreensão de linguagem'),label:l('THE LANGUAGE LAYER','A CAMADA DE LINGUAGEM'),title:l('Interpret the question. Choose the next step.','Interprete a pergunta. Escolha o próximo passo.'),description:l('A language model helps interpret requests and select tools. Clear instructions and tool descriptions guide that decision.','Um modelo de linguagem ajuda a interpretar solicitações e selecionar ferramentas. Instruções claras e descrições das ferramentas orientam essa decisão.')},
+  tools: {name:l('Tools','Ferramentas'),short:l('Retrieve & calculate','Consultar e calcular'),label:l('THE ACTION LAYER','A CAMADA DE AÇÃO'),title:l('Connect reasoning to actual operations.','Conecte o raciocínio a operações concretas.'),description:l('Tools give agents defined ways to retrieve records, query data or calculate indicators. Inputs and outputs form an explicit contract.','As ferramentas oferecem formas definidas de buscar registros, consultar dados e calcular indicadores. Entradas e saídas seguem um contrato explícito.')},
+  output: {name:l('Output','Saída'),short:l('Structured response','Resposta estruturada'),label:l('THE RESPONSE LAYER','A CAMADA DE RESPOSTA'),title:l('Make the result useful to another system.','Torne o resultado útil para outro sistema.'),description:l('Specialist findings can be consolidated into structured JSON, with supporting explanations and explicit limitations.','As análises dos especialistas podem ser consolidadas em JSON estruturado, com explicações de apoio e limitações explícitas.')}
 };
+export const initialTrace: TraceLine[] = [{text:l('Ready to explore.','Pronto para explorar.')},{text:l('Select a request and watch the agents coordinate.','Escolha uma solicitação e acompanhe os agentes em ação.'),kind:'muted'}];
+export const requestReceived = l('Request received. Planning specialist tasks.','Solicitação recebida. Planejando as tarefas dos especialistas.');
 export const workflowLines: Record<Scenario,TraceLine[]> = {
-  overview: [
-    {text:'Orchestrator → bureau + payments'},
-    {text:'Orchestrator → cards + contracts'},
-    {text:'Specialists → sample findings returned'},
-    {text:'Synthesis → combine the four perspectives'},
-    {text:'Demo complete. Structured summary ready.',kind:'success'}
-  ],
-  payments: [
-    {text:'Orchestrator → payment specialist'},
-    {text:'Tool → retrieve illustrative payment records'},
-    {text:'Specialist → summarize timing and history'},
-    {text:'Demo complete. Payment summary ready.',kind:'success'}
-  ],
-  contracts: [
-    {text:'Orchestrator → contract specialist'},
-    {text:'Tool → retrieve illustrative contract records'},
-    {text:'Specialist → summarize existing obligations'},
-    {text:'Demo complete. Contract summary ready.',kind:'success'}
-  ]
+  overview:[{text:l('Orchestrator → bureau + payments','Orquestrador → bureau + pagamentos')},{text:l('Orchestrator → cards + contracts','Orquestrador → cartões + contratos')},{text:l('Specialists → sample findings returned','Especialistas → resultados ilustrativos recebidos')},{text:l('Synthesis → combine the four perspectives','Consolidação → reunir as quatro perspectivas')},{text:l('Demo complete. Structured summary ready.','Demonstração concluída. Resumo estruturado pronto.'),kind:'success'}],
+  payments:[{text:l('Orchestrator → payment specialist','Orquestrador → especialista em pagamentos')},{text:l('Tool → retrieve illustrative payment records','Ferramenta → consultar registros ilustrativos de pagamentos')},{text:l('Specialist → summarize timing and history','Especialista → resumir prazos e histórico')},{text:l('Demo complete. Payment summary ready.','Demonstração concluída. Resumo de pagamentos pronto.'),kind:'success'}],
+  contracts:[{text:l('Orchestrator → contract specialist','Orquestrador → especialista em contratos')},{text:l('Tool → retrieve illustrative contract records','Ferramenta → consultar registros ilustrativos de contratos')},{text:l('Specialist → summarize existing obligations','Especialista → resumir as obrigações existentes')},{text:l('Demo complete. Contract summary ready.','Demonstração concluída. Resumo de contratos pronto.'),kind:'success'}]
 };
-interface Project {type:string; title:string; intro:string; sections:{title:string;items:string[]}[];note?:string;url:string;linkLabel?:string}
-export const projects: Record<ProjectId,Project> = {
-  jarvis: {
-    type:'01 / AI SYSTEMS · TEAM PROJECT', title:'JARVIS / Multi-agent analysis',
-    intro:'A credit-analysis project discussed in my shared professional background, organized around an orchestrator and specialized agents.',
+export interface Project {
+  id:ProjectId; category:Exclude<Filter,'all'>; index:string; type:Localized; title:Localized; intro:Localized; tags:string[];
+  sections:{title:Localized;items:Localized[]}[]; note?:Localized; image?:string; imageAlt?:Localized;
+  links?:{label:Localized;url:string}[];
+}
+export const projects: Project[] = [
+  {
+    id:'multiagent',category:'ai',index:'01',type:l('AI SYSTEMS · TEAM PROJECT','SISTEMAS DE IA · PROJETO EM EQUIPE'),title:l('Multi-agent credit analysis','Análise de crédito multiagente'),
+    intro:l('One request, several specialists. An orchestrator connects bureau, payment, card and contract perspectives into a structured credit analysis.','Uma solicitação, vários especialistas. Um orquestrador conecta análises de bureau, pagamentos, cartões e contratos em uma resposta estruturada.'),tags:['Python','Google ADK','LLMs','JSON'],
     sections:[
-      {title:'The architectural idea',items:['An orchestrator receives a question and delegates to specialists.','Bureau, payment, card and contract perspectives are combined into a structured response.','Python and Google ADK provide the foundation described in the shared project overview.']},
-      {title:'Explore the concept',items:['The interactive lab below offers a simplified view of delegation and synthesis.','The visual model is an explanation of the pattern, rather than a running instance of the original project.']}
-    ],
-    note:'The supplied Bitbucket URL requires access or is unavailable. The repository code could not be independently inspected. Project details here are limited to the shared background; the playground uses no real customer data.',
-    url:'https://bitbucket.org/2rp-net/multi-agent-system-jarvis/src/master/',linkLabel:'Open Bitbucket (access may be required)'
+      {title:l('How the responsibilities connect','Como as responsabilidades se conectam'),items:[l('An orchestrator interprets the question and delegates investigations to specialized agents.','Um orquestrador interpreta a pergunta e delega investigações a agentes especializados.'),l('Each specialist works with a distinct perspective: bureau, payments, cards or contracts.','Cada especialista trabalha com uma perspectiva: bureau, pagamentos, cartões ou contratos.'),l('Findings are consolidated into a structured response with an analytical narrative.','Os resultados são consolidados em uma resposta estruturada com uma narrativa analítica.')]},
+      {title:l('Explore the representation','Explore a representação'),items:[l('The lab illustrates delegation, specialist tools and synthesis using predefined examples.','O laboratório ilustra a delegação, as ferramentas e a consolidação com exemplos predefinidos.'),l('This project is separate from my JARVIS desktop assistant.','Este projeto é separado do meu assistente desktop JARVIS.')]}
+    ],note:l('Conceptual representation of a project described in my professional background. Source code is not public. The demo uses no real customer records and makes no live credit decisions.','Representação conceitual de um projeto descrito na minha trajetória profissional. O código não é público. A demonstração não usa dados reais de clientes nem realiza decisões de crédito.')
   },
-  exchange: {
-    type:'02 / FULL-STACK · COLLABORATIVE PROJECT',title:'SENAI Exchange',
-    intro:'A collaborative-economy platform for SENAI students to share, donate and exchange academic materials, tools, books and electronic components.',
+  {
+    id:'exchange',category:'software',index:'02',type:l('FULL-STACK · TEAM PROJECT','FULL-STACK · PROJETO EM EQUIPE'),title:l('SENAI Exchange','SENAI Exchange'),
+    intro:l('A collaborative platform for students to share, donate and exchange academic materials, tools and electronics.','Uma plataforma colaborativa para alunos compartilharem, doarem e trocarem materiais acadêmicos, ferramentas e eletrônicos.'),tags:['Java / Spring Boot','PostgreSQL','Docker'],
+    image:'/projects/senai-exchange.png',imageAlt:l('SENAI Exchange interface: tools, electronics and academic item exchanges. Screenshot supplied by Nícolas.','Interface do SENAI Exchange: trocas de ferramentas, eletrônicos e materiais acadêmicos. Captura fornecida por Nícolas.'),
     sections:[
-      {title:'What the system brings together',items:['Student registration and login with BCrypt password hashing.','Item listings, category filters and exchange proposals.','Messaging linked to exchanges and student profiles.']},
-      {title:'Engineering approach',items:['Java 17 and Spring Boot serve both REST endpoints and static frontend resources.','Spring Data JPA / Hibernate connect the application to PostgreSQL.','Docker Compose provisions PostgreSQL and pgAdmin.']}
-    ],note:'Summary based on the public repository README. The portfolio preview is a new interface concept, not a screenshot of the deployed project. Team project; no individual contribution percentages or performance claims are implied.',url:'https://github.com/Nicolas75460/sistema-trocas-alunos'
+      {title:l('A complete exchange journey','Uma jornada completa de trocas'),items:[l('Student registration and login with BCrypt password hashing.','Cadastro e login de alunos com hash de senhas usando BCrypt.'),l('Item listings, category filters and exchange proposals.','Anúncios de itens, filtros por categoria e propostas de troca.'),l('Messages linked to exchanges and student profiles.','Mensagens vinculadas às trocas e perfis dos alunos.')]},
+      {title:l('Engineering approach','Arquitetura da aplicação'),items:[l('Java 17 and Spring Boot serve REST endpoints and static frontend resources.','Java 17 e Spring Boot disponibilizam endpoints REST e os arquivos estáticos do frontend.'),l('Spring Data JPA / Hibernate connect the application to PostgreSQL.','Spring Data JPA / Hibernate conectam a aplicação ao PostgreSQL.'),l('Docker Compose provisions PostgreSQL and pgAdmin.','Docker Compose prepara os serviços PostgreSQL e pgAdmin.')]}
+    ],note:l('Original interface screenshot supplied by me, preserved in Portuguese. Technical summary based on the public repository.','Captura original da interface fornecida por mim. Resumo técnico baseado no repositório público.'),
+    links:[{label:l('View repository','Ver repositório'),url:'https://github.com/Nicolas75460/sistema-trocas-alunos'}]
   },
-  hive: {
-    type:'03 / DATA & IoT · SENSOR SYSTEMS',title:'Colmeia Smart',
-    intro:'A beehive-monitoring project that connects ESP32 sensor readings to messaging, storage and dashboards.',
+  {
+    id:'market',category:'software',index:'03',type:l('E-COMMERCE · TEAM PROJECT','E-COMMERCE · PROJETO EM EQUIPE'),title:l('Mercado Prático','Mercado Prático'),
+    intro:l('A grocery-shopping platform connecting a product catalog and cart to order, stock and supplier management.','Uma plataforma de compras de mercado que conecta catálogo e carrinho à gestão de pedidos, estoque e fornecedores.'),tags:['React','TypeScript','Java / Spring Boot'],
+    image:'/projects/mercado-pratico.png',imageAlt:l('Mercado Prático homepage with product search and grocery categories. Screenshot supplied by Nícolas.','Página inicial do Mercado Prático com busca de produtos e categorias de mercado. Captura fornecida por Nícolas.'),
     sections:[
-      {title:'The data journey',items:['ESP32 devices collect temperature, humidity and bee-movement readings.','Mosquitto provides MQTT messaging, with MariaDB storing the collected data.','Next.js and Grafana provide interfaces for visualization.']},
-      {title:'Supporting infrastructure',items:['Docker Compose manages the service environment.','Node-RED supports embedded-device simulation and testing.','Portainer provides container management.']}
-    ],note:'Technologies and system description come from the public README. Its setup instructions reference the upstream mundobee project. The portfolio chart uses illustrative data and is not live hive telemetry.',url:'https://github.com/Nicolas75460/projeto-colmeia-smart'
+      {title:l('Customer experience','Experiência de compra'),items:[l('React and TypeScript power product browsing, categories, search and a shopping cart.','React e TypeScript compõem a navegação por produtos, categorias, busca e carrinho.'),l('Dedicated pages for customer profiles, addresses, orders and checkout.','Páginas dedicadas a perfis, endereços, pedidos e finalização de compra.'),l('React Router organizes navigation; Axios connects the frontend to the API.','React Router organiza a navegação; Axios conecta o frontend à API.')]},
+      {title:l('Behind the storefront','Por trás da loja'),items:[l('A separate Java / Spring Boot backend exposes controllers for products, carts and orders.','Um backend separado em Java / Spring Boot disponibiliza controladores de produtos, carrinhos e pedidos.'),l('Administrative pages cover inventory, categories, suppliers, products and users.','As páginas administrativas abrangem estoque, categorias, fornecedores, produtos e usuários.')]}
+    ],note:l('Original screenshot supplied by me. Features and technologies were checked against the public source structure and frontend dependencies; no live payment or production deployment claim is implied.','Captura original fornecida por mim. Funcionalidades e tecnologias conferidas na estrutura pública do código e nas dependências do frontend; isso não implica pagamentos ou implantação em produção.'),
+    links:[{label:l('Frontend repository','Repositório do frontend'),url:'https://github.com/SinkoX/site-mercado-pratico'},{label:l('Backend repository','Repositório do backend'),url:'https://github.com/SinkoX/projeto-mercado-pratico'}]
   },
-  todo: {
-    type:'04 / BACKEND & TESTING · LEARNING PROJECT',title:'To-Do API / testing lab',
-    intro:'A practical Flask REST API lab focused on testing at multiple levels and continuous integration.',
+  {
+    id:'jarvis',category:'automation',index:'04',type:l('DESKTOP · VOICE & AUTOMATION','DESKTOP · VOZ E AUTOMAÇÃO'),title:l('J.A.R.V.I.S.','J.A.R.V.I.S.'),
+    intro:l('A native Python assistant for Windows, combining Brazilian Portuguese voice and text commands with a futuristic desktop interface.','Um assistente nativo em Python para Windows que combina comandos de voz e texto em português brasileiro com uma interface futurista.'),tags:['Python','CustomTkinter','SpeechRecognition','pyttsx3'],
     sections:[
-      {title:'Testing across the application',items:['Unit tests isolate models and business logic.','Integration tests verify routes, HTTP contracts and status codes.','End-to-end tests exercise the task lifecycle.']},
-      {title:'Continuous integration',items:['The documented workflow uses Pytest, pytest-cov and GitHub Actions.','The lab specifies an 80% coverage quality gate as a configuration target, rather than a measured portfolio result.']}
-    ],note:'This is an academic learning project, described from its public README. The original API uses Flask; this portfolio itself has no backend.',url:'https://github.com/Nicolas75460/TodoApp_N2'
+      {title:l('From a command to an action','Do comando à ação'),items:[l('Voice capture through sounddevice and SpeechRecognition, with Brazilian Portuguese speech recognition.','Captura de voz com sounddevice e SpeechRecognition, com reconhecimento em português brasileiro.'),l('Text-to-speech through pyttsx3 and native Windows voices.','Síntese de voz com pyttsx3 e vozes nativas do Windows.'),l('Commands cover applications, browser searches, text input, screenshots and system information.','Os comandos incluem aplicativos, pesquisas na web, digitação de texto, capturas de tela e informações do sistema.')]},
+      {title:l('Desktop engineering','Engenharia desktop'),items:[l('CustomTkinter and tkinter.Canvas provide the interface and animated visual elements.','CustomTkinter e tkinter.Canvas compõem a interface e os elementos visuais animados.'),l('pyautogui, subprocess and psutil connect commands to Windows operations.','pyautogui, subprocess e psutil conectam os comandos às operações do Windows.')]}
+    ],note:l('Based on the public JARVIS README. The command preview here is a local visual simulation. It does not access your microphone or control your device.','Baseado no README público do JARVIS. A prévia de comandos é uma simulação visual local. Ela não acessa o microfone nem controla seu dispositivo.'),
+    links:[{label:l('View repository','Ver repositório'),url:'https://github.com/Nicolas75460/projeto-jarvis'}]
+  },
+  {
+    id:'documents',category:'ai',index:'05',type:l('DOCUMENT AI · OCR & RAG','IA DOCUMENTAL · OCR E RAG'),title:l('Document intelligence','Inteligência documental'),
+    intro:l('From source files to context-supported drafts: OCR, text extraction, retrieval and document writing in a connected workflow.','Dos arquivos de origem às minutas com apoio de contexto: OCR, extração de texto, recuperação e redação em um fluxo conectado.'),tags:['OCR','RAG','LLMs','PDF / Word'],
+    sections:[
+      {title:l('A pipeline built around documents','Um fluxo centrado nos documentos'),items:[l('Extract text from source documents, using OCR where text is contained in images.','Extrair o texto dos documentos de origem, usando OCR quando o conteúdo estiver em imagens.'),l('Organize text into retrievable context and select relevant passages for a question or drafting task.','Organizar o texto em contexto recuperável e selecionar trechos relevantes para uma pergunta ou tarefa de redação.'),l('Use retrieved context to support analysis and drafting, followed by human review.','Usar o contexto recuperado para apoiar a análise e a redação, seguidas de revisão humana.')]},
+      {title:l('What the representation shows','O que a representação apresenta'),items:[l('Select a stage to follow the journey from source, through extraction and retrieval, to a draft.','Selecione uma etapa para acompanhar o percurso da origem, passando pela extração e recuperação, até a minuta.'),l('The preview uses fictional snippets and exposes no original documents.','A prévia usa trechos fictícios e não expõe documentos originais.')]}
+    ],note:l('Conceptual representation of an OCR, extraction and document-drafting project with RAG. Source code is not public. This portfolio does not process uploads or generate real documents.','Representação conceitual de um projeto de OCR, extração e redação de documentos com RAG. O código não é público. O portfólio não processa arquivos nem gera documentos reais.')
   }
-};
+];

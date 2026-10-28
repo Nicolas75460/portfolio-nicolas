@@ -1,0 +1,23 @@
+import { useState } from 'react';
+import { projects, type Filter, type Language, type Project, type ProjectId } from './data';
+import { SystemMap, DocumentPipeline, JarvisPreview } from './ProjectVisuals';
+
+export function ProjectGallery({language,onProject}:{language:Language;onProject:(id:ProjectId)=>void}) {
+  const pt=language==='pt-BR';
+  const [filter,setFilter]=useState<Filter>('all');
+  const visible=projects.filter(project=>filter==='all'||project.category===filter);
+  const filters:{id:Filter;label:string}[]=[{id:'all',label:pt?'Todos':'All work'},{id:'ai',label:pt?'Sistemas de IA':'AI systems'},{id:'software',label:'Software'},{id:'automation',label:pt?'Automação':'Automation'}];
+  function details(project:Project) {return <div className="compact-copy"><p className="project-meta">{project.index} / {project.type[language]}</p><h3>{project.title[language]} <button aria-label={`${pt?'Ver projeto':'View project'} ${project.title[language]}`} data-project={project.id} onClick={()=>onProject(project.id)}>↗</button></h3><p>{project.intro[language]}</p><div className="tags">{project.tags.map(tag=><span key={tag}>{tag}</span>)}</div>{!project.links&&<span className="private-caption">{pt?'CÓDIGO NÃO PÚBLICO · REPRESENTAÇÃO CONCEITUAL':'SOURCE NOT PUBLIC · CONCEPTUAL REPRESENTATION'}</span>}</div>;}
+  return <section className="section work" id="work">
+    <div className="section-heading reveal"><div><p className="eyebrow">01 / {pt?'PROJETOS SELECIONADOS':'SELECTED WORK'}</p><h2>{pt?'Ideias em construção.':'Ideas, engineered.'}</h2></div><p>{pt?'Plataformas, automação e inteligência aplicada.':'Platforms, automation and applied intelligence.'}<br/>{pt?'Cinco projetos. Diferentes formas de resolver problemas.':'Five projects. Different ways to solve problems.'}</p></div>
+    <div className="work-toolbar"><div className="filters" role="group" aria-label={pt?'Filtrar projetos':'Filter projects'}>{filters.map(item=><button key={item.id} data-filter={item.id} aria-pressed={filter===item.id} onClick={()=>setFilter(item.id)}>{item.label}{item.id==='all'&&<span>05</span>}</button>)}</div><span className="micro" id="project-count" aria-live="polite">{String(visible.length).padStart(2,'0')} {pt?(visible.length===1?'PROJETO':'PROJETOS'):(visible.length===1?'PROJECT':'PROJECTS')}</span></div>
+    <div className="projects">
+      {projects.map(project=>project.id==='multiagent'?<article key={project.id} className="project featured reveal" data-category={project.category} data-project-card={project.id} hidden={filter!=='all'&&filter!==project.category}>
+        <div className="project-copy"><p className="project-meta"><span className="red-dot"/>{pt?'SISTEMAS DE IA':'AI SYSTEMS'}<span>{pt?'PROJETO EM EQUIPE':'TEAM PROJECT'}</span></p><p className="project-index">01 / {pt?'ANÁLISE MULTIAGENTE':'MULTI-AGENT ANALYSIS'}</p><h3>{pt?'Uma pergunta.':'One question.'}<br/>{pt?'Múltiplas perspectivas.':'Multiple perspectives.'}</h3><p>{project.intro[language]}</p><div className="tags">{project.tags.map(tag=><span key={tag}>{tag}</span>)}</div><button className="text-link" data-project="multiagent" onClick={()=>onProject('multiagent')}>{pt?'Explorar a arquitetura':'Explore the architecture'}<span>↗</span></button><p className="source-note">{pt?'Código não público. Explore uma representação do sistema.':'Source not public. Explore a representation of the system.'}</p></div><SystemMap language={language}/>
+      </article>:<article key={project.id} className="project compact reveal" data-category={project.category} data-project-card={project.id} hidden={filter!=='all'&&filter!==project.category}>
+        {project.image?<button className={`project-visual screenshot-preview screenshot-${project.id}`} aria-label={`${pt?'Ver detalhes de':'View details of'} ${project.title[language]}`} onClick={()=>onProject(project.id)}><div className="screenshot-browser"><span>● ● ●</span><span>{project.title[language].toUpperCase()}</span><span>↗</span></div><div className="screenshot-window"><img src={project.image} alt={project.imageAlt?.[language]||''} loading="lazy" width={project.id==='exchange'?1077:1901} height={project.id==='exchange'?1791:937}/></div><span className="screenshot-caption">{pt?'INTERFACE ORIGINAL · PT-BR':'ORIGINAL INTERFACE · PT-BR'}</span></button>:project.id==='jarvis'?<JarvisPreview language={language}/>:<DocumentPipeline language={language}/>}
+        {details(project)}
+      </article>)}
+    </div><a className="github-more" href="https://github.com/Nicolas75460?tab=repositories" target="_blank" rel="noopener noreferrer">{pt?'Mais experimentos no GitHub':'More experiments live on GitHub'}<span>↗</span></a>
+  </section>;
+}
