@@ -39,3 +39,5 @@ No performance statistics, individual contribution percentages or certifications
 The site is client-only. If a backend is added, the user's requested framework is **FastAPI**. Technologies listed for existing portfolio projects describe those projects, not a backend for this portfolio.
 
 Typography uses Google Fonts with system fallbacks. Application logic, screenshots and visualizations are served from the project bundle.
+
+The portrait is the original LinkedIn profile photo obtained at the user's request. It is served locally from `public/images/nicolas-silva.png`, with CSS framing and localized alternative text. The image itself has not been altered.
