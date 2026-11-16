@@ -53,3 +53,31 @@ export function DocumentPipeline({language}:{language:Language}) {
     <code className="pipeline-sample">{stages[stage].sample}</code><span className="visual-note">{pt?'EXEMPLO FICTÍCIO · SEM DOCUMENTOS ORIGINAIS':'FICTIONAL EXAMPLE · NO ORIGINAL DOCUMENTS'}</span>
   </div>;
 }
+
+export function CrewMonitor({language}:{language:Language}) {
+  const pt=language==='pt-BR';
+  const [scenario,setScenario]=useState(1);
+  const id=useId();
+  const causes=pt?['Clima espacial','Ambiente','Fisiologia','Psicológico']:['Space weather','Environment','Physiology','Psychological'];
+  const scenarios=[
+    {label:pt?'Nominal':'Nominal',crew:'CDR · ISS',cause:-1,state:'ok',vitals:[['FC','HR','64','+2%'],['SpO₂','SpO₂','98%','0%'],[pt?'SONO':'SLEEP',pt?'SONO':'SLEEP','7.1h','−3%']],
+      verdict:pt?'Dentro da linha de base pessoal. Nenhuma ação.':'Inside the personal baseline. No action.'},
+    {label:pt?'Tempestade solar':'Solar storm',crew:'FE-2 · MARS TRANSIT',cause:0,state:'alert',vitals:[['FC','HR','88','+31%'],['SpO₂','SpO₂','97%','−1%'],[pt?'DOSE':'DOSE',pt?'DOSE':'DOSE','↑ SEP',pt?'DONKI':'DONKI']],
+      verdict:pt?'Evento de partículas solares no DONKI. Checklist de abrigo para o oficial médico.':'Solar particle event on DONKI. Shelter checklist for the medical officer.'},
+    {label:pt?'Fadiga':'Fatigue',crew:'MS-1 · MARS TRANSIT',cause:3,state:'warn',vitals:[['FC','HR','71','+6%'],['SpO₂','SpO₂','98%','0%'],[pt?'SONO':'SLEEP',pt?'SONO':'SLEEP','4.2h','−41%']],
+      verdict:pt?'Sem causa física ou externa. Contramedida psicológica sugerida.':'No physical or external cause. Psychological countermeasure suggested.'}
+  ];
+  const current=scenarios[scenario];
+  return <div className="jarvis-visual crew-visual">
+    <div className="visual-caption"><span>ASTRACARE / {pt?'ÁRVORE DE CAUSAS':'CAUSE TREE'}</span><span className="status"><i/>{pt?'VALORES ILUSTRATIVOS':'ILLUSTRATIVE VALUES'}</span></div>
+    <div className="crew-options" role="group" aria-label={pt?'Cenários da prévia':'Preview scenarios'}>{scenarios.map((item,i)=><button key={i} aria-pressed={scenario===i} aria-controls={id} onClick={()=>setScenario(i)}>{item.label}</button>)}</div>
+    <div className="crew-body" id={id} aria-live="polite">
+      <div className="crew-reading"><p className="crew-id"><span className={`crew-light ${current.state}`}/>{current.crew}</p>
+        <dl className="crew-vitals">{current.vitals.map(([ptName,enName,value,delta])=><div key={enName}><dt>{pt?ptName:enName}</dt><dd>{value}</dd><dd className="crew-delta">{delta} <span>{pt?'vs. base':'vs. base'}</span></dd></div>)}</dl>
+      </div>
+      <ol className="cause-path" aria-label={pt?'Ordem de verificação das causas':'Cause-check order'}>{causes.map((cause,i)=>{const status=current.cause<0?'clear':i<current.cause?'clear':i===current.cause?'hit':'skip';return <li key={cause} className={`is-${status}`}><span>{status==='hit'?'●':status==='clear'?'✓':'·'}</span>{cause}<small>{status==='hit'?(pt?'CAUSA PROVÁVEL':'LIKELY CAUSE'):status==='clear'?(pt?'DESCARTADA':'RULED OUT'):(pt?'NÃO VERIFICADA':'NOT REACHED')}</small></li>;})}</ol>
+      <p className="crew-verdict">{current.verdict}</p>
+    </div>
+    <div className="map-footer"><span>{pt?'NAVE ↔ TERRA · 3–22 MIN POR SENTIDO':'SHIP ↔ EARTH · 3–22 MIN EACH WAY'}</span><span>↗</span></div>
+  </div>;
+}

@@ -23,7 +23,7 @@ export default function App() {
   useEffect(()=>{
     document.documentElement.lang=language;
     document.title=language==='en'?'Nícolas Silva — Software & AI':'Nícolas Silva — Software e IA';
-    const description=language==='en'?'Nícolas Silva — software development, generative AI and automation. Explore five projects and an interactive agent architecture.':'Nícolas Silva — desenvolvimento de software, IA generativa e automação. Explore cinco projetos e uma arquitetura interativa de agentes.';
+    const description=language==='en'?'Nícolas Silva — software development, generative AI and automation. Explore six projects and an interactive agent architecture.':'Nícolas Silva — desenvolvimento de software, IA generativa e automação. Explore seis projetos e uma arquitetura interativa de agentes.';
     document.querySelector('meta[name="description"]')?.setAttribute('content',description);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content',document.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content',description);

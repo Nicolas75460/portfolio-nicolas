@@ -16,10 +16,11 @@ The build checks TypeScript and creates `dist/`. Hosting configuration is in `.o
 ## Projects
 
 1. **Multi-agent credit analysis** — conceptual representation of a non-public team project, separate from JARVIS. No repository link is exposed.
-2. **SENAI Exchange** — public Spring Boot / PostgreSQL student exchange project, with the original screenshot supplied by the user.
-3. **Mercado Prático** — public SinkoX React / TypeScript frontend and Java / Spring Boot backend, with the original screenshot supplied by the user.
-4. **J.A.R.V.I.S.** — public native Python voice and text assistant for Windows. The local command preview performs no device actions.
-5. **Document intelligence** — conceptual representation of a non-public OCR, extraction, RAG and document-drafting project. No repository link or original documents are exposed.
+2. **AstraCare AI** — public NASA Space Apps Challenge 2026 team project (FastAPI, scikit-learn, React / Three.js, NASA DONKI and JPL Horizons), with a link to the live demo. The cause-tree preview uses illustrative values.
+3. **SENAI Exchange** — public Spring Boot / PostgreSQL student exchange project, with the original screenshot supplied by the user.
+4. **Mercado Prático** — public SinkoX React / TypeScript frontend and Java / Spring Boot backend, with the original screenshot supplied by the user.
+5. **J.A.R.V.I.S.** — public native Python voice and text assistant for Windows. The local command preview performs no device actions.
+6. **Document intelligence** — conceptual representation of a non-public OCR, extraction, RAG and document-drafting project. No repository link or original documents are exposed.
 
 Screenshots are preserved in their original Portuguese in both language versions, labeled as original interfaces. Their full-size versions are accessible from project dialogs. All agent traces, command previews and document-pipeline content are illustrative; the page makes no LLM calls, records no audio, accepts no document uploads and uses no real customer data.
 
@@ -30,6 +31,7 @@ Public sources inspected on 27 October 2026:
 - [SENAI Exchange](https://github.com/Nicolas75460/sistema-trocas-alunos): README.
 - [Mercado Prático frontend](https://github.com/SinkoX/site-mercado-pratico): dependency manifest and application structure.
 - [Mercado Prático backend](https://github.com/SinkoX/projeto-mercado-pratico): Maven manifest and controller structure. These establish Spring Boot and MySQL dependencies; no live payment or production deployment claims are made.
+- [AstraCare](https://github.com/Nicolas75460/AstraCare): README, including the cause tree, ML ensemble, agent tools, NASA data sources and stated limits (inspected 16 November 2026).
 - [JARVIS](https://github.com/Nicolas75460/projeto-jarvis): README, including CustomTkinter, sounddevice, SpeechRecognition, pyttsx3, pyautogui and psutil.
 - [LinkedIn](https://www.linkedin.com/in/n%C3%ADcolas-silva-b37306323/): confirmed headline and current professional positioning.
 - [User-provided shared conversation](https://chatgpt.com/share/6ae12ce5-50e0-83e9-bc4f-363e21ca9872): background on the non-public AI projects and education. Prior assistant-written claims were not treated as independently verified results.

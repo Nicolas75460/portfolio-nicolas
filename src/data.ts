@@ -3,7 +3,7 @@ export type Localized = { en: string; 'pt-BR': string };
 export const l = (en: string, pt: string): Localized => ({ en, 'pt-BR': pt });
 export type Orbit = 'ai' | 'data' | 'code';
 export type Filter = 'all' | 'ai' | 'software' | 'automation';
-export type ProjectId = 'multiagent' | 'exchange' | 'market' | 'jarvis' | 'documents';
+export type ProjectId = 'multiagent' | 'astracare' | 'exchange' | 'market' | 'jarvis' | 'documents';
 export type Module = 'context' | 'memory' | 'orchestrator' | 'models' | 'tools' | 'output';
 export type Scenario = 'overview' | 'payments' | 'contracts';
 export interface TraceLine { text: Localized; kind?: 'muted' | 'success' }
@@ -42,7 +42,16 @@ export const projects: Project[] = [
     ],note:l('Conceptual representation of a project described in my professional background. Source code is not public. The demo uses no real customer records and makes no live credit decisions.','Representação conceitual de um projeto descrito na minha trajetória profissional. O código não é público. A demonstração não usa dados reais de clientes nem realiza decisões de crédito.')
   },
   {
-    id:'exchange',category:'software',index:'02',type:l('FULL-STACK · TEAM PROJECT','FULL-STACK · PROJETO EM EQUIPE'),title:l('SENAI Exchange','SENAI Exchange'),
+    id:'astracare',category:'ai',index:'02',type:l('NASA SPACE APPS 2026 · HACKATHON','NASA SPACE APPS 2026 · HACKATHON'),title:l('AstraCare AI','AstraCare AI'),
+    intro:l('An offline-first medical officer for space crews. It watches each astronaut against their own baseline, checks space weather before blaming the body, and turns every alert into a checklist a human confirms.','Um oficial médico de bordo que funciona offline. Acompanha cada astronauta em relação à própria linha de base, consulta o clima espacial antes de culpar o corpo e transforma cada alerta em um checklist confirmado por uma pessoa.'),tags:['Python / FastAPI','scikit-learn','React / Three.js','NASA DONKI','JPL Horizons'],
+    sections:[
+      {title:l('Built for a delayed link to Earth','Feito para um link atrasado com a Terra'),items:[l('A message to Earth from Mars takes 3 to 22 minutes each way, so the crew needs answers on board.','Uma mensagem de Marte para a Terra leva de 3 a 22 minutos em cada sentido, então a tripulação precisa de respostas a bordo.'),l('Per-astronaut adaptive baselines (EWMA + MAD, Mahalanobis distance) separate a personal deviation from a population average.','Linhas de base adaptativas por astronauta (EWMA + MAD, distância de Mahalanobis) separam um desvio pessoal de uma média populacional.'),l('A cause tree checks live NASA DONKI space weather first and calls a change psychological only when no physical or external cause explains it.','Uma árvore de causas consulta primeiro o clima espacial do NASA DONKI e só considera uma mudança psicológica quando nenhuma causa física ou externa a explica.')]},
+      {title:l('Engineering approach','Arquitetura da aplicação'),items:[l('FastAPI backend with a calibrated scikit-learn ensemble over 26 features that classifies 8 syndromes, with uncertainty and a 72-hour forecast.','Backend em FastAPI com um ensemble calibrado de scikit-learn sobre 26 atributos que classifica 8 síndromes, com incerteza e previsão de 72 horas.'),l('A tool-calling agent chains exam → diagnosis → alert → countermeasure, with a deterministic offline pipeline when there is no model or network.','Um agente com ferramentas encadeia exame → diagnóstico → alerta → contramedida, com um fluxo determinístico offline quando não há modelo ou rede.'),l('React 19 + React Three Fiber frontend with a 3D body split into 25 selectable regions; JPL Horizons sets the live Ship ↔ Earth delay.','Frontend em React 19 + React Three Fiber com um corpo 3D dividido em 25 regiões selecionáveis; o JPL Horizons define o atraso real Nave ↔ Terra.')]}
+    ],note:l('Hackathon team project for the NASA Space Apps Challenge 2026 (Challenge 05). The ML is trained on a NASA-calibrated synthetic generator, not on astronaut medical records; it never diagnoses on its own. The preview here uses illustrative values.','Projeto em equipe do NASA Space Apps Challenge 2026 (Desafio 05). O ML é treinado com um gerador sintético calibrado com dados da NASA, não com prontuários de astronautas, e nunca diagnostica sozinho. A prévia aqui usa valores ilustrativos.'),
+    links:[{label:l('Open live demo','Abrir demonstração'),url:'https://nasa-hackaton.vercel.app/'},{label:l('View repository','Ver repositório'),url:'https://github.com/Nicolas75460/AstraCare'}]
+  },
+  {
+    id:'exchange',category:'software',index:'03',type:l('FULL-STACK · TEAM PROJECT','FULL-STACK · PROJETO EM EQUIPE'),title:l('SENAI Exchange','SENAI Exchange'),
     intro:l('A collaborative platform for students to share, donate and exchange academic materials, tools and electronics.','Uma plataforma colaborativa para alunos compartilharem, doarem e trocarem materiais acadêmicos, ferramentas e eletrônicos.'),tags:['Java / Spring Boot','PostgreSQL','Docker'],
     image:'/projects/senai-exchange.png',imageAlt:l('SENAI Exchange interface: tools, electronics and academic item exchanges. Screenshot supplied by Nícolas.','Interface do SENAI Exchange: trocas de ferramentas, eletrônicos e materiais acadêmicos. Captura fornecida por Nícolas.'),
     sections:[
@@ -52,7 +61,7 @@ export const projects: Project[] = [
     links:[{label:l('View repository','Ver repositório'),url:'https://github.com/Nicolas75460/sistema-trocas-alunos'}]
   },
   {
-    id:'market',category:'software',index:'03',type:l('E-COMMERCE · TEAM PROJECT','E-COMMERCE · PROJETO EM EQUIPE'),title:l('Mercado Prático','Mercado Prático'),
+    id:'market',category:'software',index:'04',type:l('E-COMMERCE · TEAM PROJECT','E-COMMERCE · PROJETO EM EQUIPE'),title:l('Mercado Prático','Mercado Prático'),
     intro:l('A grocery-shopping platform connecting a product catalog and cart to order, stock and supplier management.','Uma plataforma de compras de mercado que conecta catálogo e carrinho à gestão de pedidos, estoque e fornecedores.'),tags:['React','TypeScript','Java / Spring Boot'],
     image:'/projects/mercado-pratico.png',imageAlt:l('Mercado Prático homepage with product search and grocery categories. Screenshot supplied by Nícolas.','Página inicial do Mercado Prático com busca de produtos e categorias de mercado. Captura fornecida por Nícolas.'),
     sections:[
@@ -62,7 +71,7 @@ export const projects: Project[] = [
     links:[{label:l('Frontend repository','Repositório do frontend'),url:'https://github.com/SinkoX/site-mercado-pratico'},{label:l('Backend repository','Repositório do backend'),url:'https://github.com/SinkoX/projeto-mercado-pratico'}]
   },
   {
-    id:'jarvis',category:'automation',index:'04',type:l('DESKTOP · VOICE & AUTOMATION','DESKTOP · VOZ E AUTOMAÇÃO'),title:l('J.A.R.V.I.S.','J.A.R.V.I.S.'),
+    id:'jarvis',category:'automation',index:'05',type:l('DESKTOP · VOICE & AUTOMATION','DESKTOP · VOZ E AUTOMAÇÃO'),title:l('J.A.R.V.I.S.','J.A.R.V.I.S.'),
     intro:l('A native Python assistant for Windows, combining Brazilian Portuguese voice and text commands with a futuristic desktop interface.','Um assistente nativo em Python para Windows que combina comandos de voz e texto em português brasileiro com uma interface futurista.'),tags:['Python','CustomTkinter','SpeechRecognition','pyttsx3'],
     sections:[
       {title:l('From a command to an action','Do comando à ação'),items:[l('Voice capture through sounddevice and SpeechRecognition, with Brazilian Portuguese speech recognition.','Captura de voz com sounddevice e SpeechRecognition, com reconhecimento em português brasileiro.'),l('Text-to-speech through pyttsx3 and native Windows voices.','Síntese de voz com pyttsx3 e vozes nativas do Windows.'),l('Commands cover applications, browser searches, text input, screenshots and system information.','Os comandos incluem aplicativos, pesquisas na web, digitação de texto, capturas de tela e informações do sistema.')]},
@@ -71,7 +80,7 @@ export const projects: Project[] = [
     links:[{label:l('View repository','Ver repositório'),url:'https://github.com/Nicolas75460/projeto-jarvis'}]
   },
   {
-    id:'documents',category:'ai',index:'05',type:l('DOCUMENT AI · OCR & RAG','IA DOCUMENTAL · OCR E RAG'),title:l('Document intelligence','Inteligência documental'),
+    id:'documents',category:'ai',index:'06',type:l('DOCUMENT AI · OCR & RAG','IA DOCUMENTAL · OCR E RAG'),title:l('Document intelligence','Inteligência documental'),
     intro:l('From source files to context-supported drafts: OCR, text extraction, retrieval and document writing in a connected workflow.','Dos arquivos de origem às minutas com apoio de contexto: OCR, extração de texto, recuperação e redação em um fluxo conectado.'),tags:['OCR','RAG','LLMs','PDF / Word'],
     sections:[
       {title:l('A pipeline built around documents','Um fluxo centrado nos documentos'),items:[l('Extract text from source documents, using OCR where text is contained in images.','Extrair o texto dos documentos de origem, usando OCR quando o conteúdo estiver em imagens.'),l('Organize text into retrievable context and select relevant passages for a question or drafting task.','Organizar o texto em contexto recuperável e selecionar trechos relevantes para uma pergunta ou tarefa de redação.'),l('Use retrieved context to support analysis and drafting, followed by human review.','Usar o contexto recuperado para apoiar a análise e a redação, seguidas de revisão humana.')]},
